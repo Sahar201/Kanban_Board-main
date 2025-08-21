@@ -1,0 +1,552 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #2b2c37;
+  color: #ffffff;
+  margin: 0;
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.sidebar {
+  background: #1e1f29;
+  padding: 20px;
+  width: 200px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+  transition: transform 0.3s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.sidebar.hidden {
+  transform: translateX(-100%);
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #3e3f4e;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.add-task {
+  background: #635fc7;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.add-task:hover {
+  background: #4b49a4;
+}
+
+.add-task i {
+  margin-right: 10px;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #4c4c4d;
+  transition: color 0.2s ease;
+}
+
+.menu-toggle:hover {
+  color: #635fc7;
+}
+
+.kanban-board {
+  display: flex;
+  gap: 20px;
+}
+
+.column {
+  flex: 1;
+  background: #3e3f4e;
+  padding: 15px;
+  border-radius: 8px;
+  min-height: 200px;
+}
+
+.column h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.task {
+  background: #635fc7;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: white;
+  cursor: grab;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  overflow: hidden;
+  align-items: flex-start;
+  position: relative;
+}
+
+.task span {
+  max-width: 15rem;
+  overflow: hidden;
+  flex-grow: 1;
+  word-wrap: break-word;
+  line-height: 1.4;
+}
+
+.task:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.task:active, .task.dragging {
+  opacity: 0.7;
+  transform: scale(0.95);
+}
+
+.task.todo {
+  background: #3498db;
+}
+
+.task.doing {
+  background: #e67e22;
+}
+
+.task.done {
+  background: #2ecc71;
+}
+
+.del {
+  background: transparent;
+  color: #e74c3c;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 5px;
+  min-width: 30px;
+  text-align: center;
+}
+
+.del:hover {
+  color: #c0392b;
+  transform: scale(1.2);
+}
+
+.column.drag-over {
+  border: 2px dashed #fff;
+}
+
+.sidebar-top {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 30px;
+  margin-right: 10px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  flex-grow: 1;
+}
+
+nav ul li {
+  display: flex;
+  align-items: center;
+  background: #3e3f4e;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+nav ul li.active {
+  background: #635fc7;
+}
+
+nav ul li:hover {
+  background: #4b49a4;
+}
+
+nav ul li i {
+  margin-right: 10px;
+}
+
+.create-board {
+  font-weight: bold;
+  color: #635fc7;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  background: #3e3f4e;
+  border-radius: 20px;
+}
+
+.theme-toggle i {
+  font-size: 20px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #635fc7;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #ffffff;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+  background-color: #635fc7;
+}
+
+.hide-sidebar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.hide-sidebar:hover {
+  color: #635fc7;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(43, 44, 55, 0.95);
+  backdrop-filter: blur(5px);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #635fc7;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 300px;
+  max-width: 90%;
+  color: white;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal input,
+.modal textarea,
+.modal select {
+  padding: 8px;
+  border: 1px solid #635fc7;
+  border-radius: 4px;
+  background: #2b2c37;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.modal button {
+  padding: 10px;
+  background: #635fc7;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.modal button:hover {
+  background: #4b49a4;
+}
+
+.delete-button {
+  background: #e74c3c !important;
+  margin-top: 10px;
+}
+
+.delete-button:hover {
+  background: #c0392b !important;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #2ecc71;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2000;
+}
+
+.light-mode {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.light-mode .sidebar {
+  background: #ffffff;
+  color: #333;
+}
+
+.light-mode nav ul li {
+  background: #e4e4e7;
+  color: #333;
+}
+
+.light-mode nav ul li.active {
+  background: #635fc7;
+  color: white;
+}
+
+.light-mode nav ul li:hover {
+  background: #d3d3d6;
+}
+
+.light-mode .theme-toggle {
+  background: #e4e4e7;
+}
+
+.light-mode .slider {
+  background-color: #ccc;
+}
+
+.light-mode input:checked + .slider {
+  background-color: #635fc7;
+}
+
+.light-mode main {
+  background-color: #f9f9f9;
+  color: #222;
+}
+
+.light-mode header {
+  border-bottom: 2px solid #ccc;
+}
+
+.light-mode .kanban-board {
+  background: #f9f9f9;
+}
+
+.light-mode .column {
+  background: #ddd;
+  color: #222;
+}
+
+.light-mode .task {
+  color: white;
+}
+
+.light-mode .add-task {
+  background: #635fc7;
+  color: white;
+}
+
+.light-mode .hide-sidebar {
+  color: #333;
+}
+
+.light-mode .menu-toggle {
+  color: #333;
+}
+
+.light-mode .menu-toggle:hover {
+  color: #635fc7;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 250px;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  main {
+    margin-left: 0;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+    order: -1;
+    margin-right: 10px;
+  }
+
+  .kanban-board {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .column {
+    width: 100%;
+  }
+
+  .add-task {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .task {
+    padding-right: 40px;
+  }
+  
+  .del {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .del i {
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 10px;
+  }
+
+  .modal {
+    width: 95%;
+  }
+
+  .column h3 {
+    font-size: 16px;
+  }
+
+  .task {
+    font-size: 12px;
+  }
+
+  .task span {
+    max-width: calc(100% - 30px);
+    word-wrap: break-word;
+    line-height: 1.4;
+    padding-right: 5px;
+  }
+
+  .del {
+    min-width: 25px;
+  }
+
+  .add-task {
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  .mobile-menu-toggle {
+    font-size: 20px;
+  }
+}

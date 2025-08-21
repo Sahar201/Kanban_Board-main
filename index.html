@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kanban Board</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <script defer src="main.js"></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <img src="images/logo-mobile.svg" alt="Kanban Logo" class="logo" onerror="this.src='https://via.placeholder.com/30'" />
+        <h1>Kanban</h1>
+      </div>
+      <nav>
+        <ul id="boardList">
+          <li class="active">
+            <i class="fas fa-board"></i>
+            <span class="board-title">Platform Launch</span>
+          </li>
+          <li>
+            <i class="fas fa-board"></i>
+            <span class="board-title">Marketing Plan</span>
+          </li>
+          <li>
+            <i class="fas fa-board"></i>
+            <span class="board-title">Roadmap</span>
+          </li>
+          <li class="create-board">
+            <i class="fas fa-plus"></i>
+            Create New Board
+          </li>
+        </ul>
+      </nav>
+      <div class="theme-toggle">
+        <i class="fas fa-moon dark-icon"></i>
+        <label class="switch">
+          <input type="checkbox" id="theme-switch" />
+          <span class="slider round"></span>
+        </label>
+        <i class="fas fa-sun light-icon"></i>
+      </div>
+      <button class="hide-sidebar">
+        <i class="fas fa-eye-slash"></i>
+        Hide Sidebar
+      </button>
+    </aside>
+
+    <main>
+      <header>
+        <button class="mobile-menu-toggle"><i class="fas fa-bars"></i></button>
+        <h2 id="boardHeader">Platform Launch</h2>
+        <div class="header-buttons">
+          <button class="add-task">
+            <i class="fas fa-plus"></i>
+            Add New Task
+          </button>
+          <button class="menu-toggle"><i class="fas fa-ellipsis-v"></i></button>
+        </div>
+      </header>
+
+      <section class="kanban-board">
+        <div class="column todo" data-category="TODO">
+          <h3>🔵 TODO</h3>
+        </div>
+        <div class="column doing" data-category="DOING">
+          <h3>🟣 DOING</h3>
+        </div>
+        <div class="column done" data-category="DONE">
+          <h3>🟢 DONE</h3>
+        </div>
+      </section>
+    </main>
+
+    <div id="taskModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Add New Task</h2>
+        <input type="text" id="taskTitle" placeholder="Task title" />
+        <textarea id="taskDescription" placeholder="Description"></textarea>
+        <select id="taskStatus">
+          <option value="TODO">Todo</option>
+          <option value="DOING">Doing</option>
+          <option value="DONE">Done</option>
+        </select>
+        <button id="saveTask">Create Task</button>
+        <button id="closeModal">Close</button>
+      </div>
+    </div>
+
+    <div id="editTaskModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Edit Task</h2>
+        <input type="text" id="editTaskTitle" placeholder="Task title" />
+        <textarea id="editTaskDescription" placeholder="Description"></textarea>
+        <select id="editTaskStatus">
+          <option value="TODO">Todo</option>
+          <option value="DOING">Doing</option>
+          <option value="DONE">Done</option>
+        </select>
+        <button id="saveEditedTask">Save Changes</button>
+        <button id="deleteTask" class="delete-button">
+          <i class="fas fa-trash"></i> Delete Task
+        </button>
+        <button id="closeEditModal">Close</button>
+      </div>
+    </div>
+
+    <div id="editBoardModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Edit Board</h2>
+        <input type="text" id="editBoardInput" placeholder="Board name" />
+        <button id="saveEditedBoard">Save Changes</button>
+        <button id="deleteBoardButton" class="delete-button">Delete Board</button>
+        <button id="closeEditBoardModal">Close</button>
+      </div>
+    </div>
+  </body>
+</html>
