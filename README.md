@@ -44,7 +44,7 @@ Technical Practice: Reinforced my frontend skills in a real project setting.
 This project was a milestone in my journey — not just for the technical experience, but for what I learned about teamwork, time mangment, and delivering under pressure.
 
 # 🔗 Live Demo
-https://kanban-board-lovat-two.vercel.app/
+https://kanban-board-main-wine.vercel.app/
 
 
 
